@@ -1,0 +1,251 @@
+openapi: 3.1.0
+info:
+  title: Areas API
+  summary: Use the Areas API to learn more about Christian.
+  description: .
+  version: 0.1.0
+  contact:
+    name: Christian Areas
+    email: me@areas.me
+    url: areas.me
+tags:
+  - name: Core
+  - name: Life
+  - name: Career
+servers:
+  - url: 'api.areas.me'
+  - url: 'test-api.areas.me'
+paths:
+  '/persons/{personId}':
+    parameters:
+      - schema:
+          type: string
+        name: personId
+        in: path
+        required: true
+    get:
+      summary: Get User Info by User ID
+      tags:
+        - Core
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+              examples:
+                Get User Alice Smith:
+                  value:
+                    personId: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: '1997-10-31'
+                    emailVerified: true
+                    createdDate: '2019-08-24'
+        '404':
+          description: User Not Found
+      operationId: get-persons-personId
+      description: Retrieve the information of the person with the matching person ID.
+    patch:
+      summary: Update User Information
+      operationId: patch-persons-personId
+      tags:
+        - Core
+      responses:
+        '200':
+          description: User Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+              examples:
+                Updated User Rebecca Baker:
+                  value:
+                    personId: 13
+                    firstName: Rebecca
+                    lastName: Baker
+                    email: rebecca@gmail.com
+                    dateOfBirth: '1985-10-02'
+                    emailVerified: false
+                    createdDate: '2019-08-24'
+        '404':
+          description: User Not Found
+        '409':
+          description: Email Already Taken
+      description: Update the information of an existing person.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                  description: 'If a new email is given, the user''s email verified property will be set to false.'
+                dateOfBirth:
+                  type: string
+            examples:
+              Update First Name:
+                value:
+                  firstName: Rebecca
+              Update Email:
+                value:
+                  email: rebecca@gmail.com
+              Update Last Name & Date of Birth:
+                value:
+                  lastName: Baker
+                  dateOfBirth: '1985-10-02'
+        description: Patch person properties to update.
+  /person:
+    post:
+      summary: Create New User
+      operationId: post-person
+      tags:
+        - Core
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    personId: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createdDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                dateOfBirth:
+                  type: string
+                  format: date
+              required:
+                - firstName
+                - lastName
+                - email
+                - dateOfBirth
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: Post the necessary fields for the API to create a new person.
+      description: Create a new person.
+    parameters: []
+components:
+  schemas:
+    Person:
+      title: Person
+      type: object
+      description: The `Person` object contains a person’s personal details.
+      examples:
+        - personId: 1
+          createdDate: '2022-01-01'
+          email:
+            emailAddress: me@areas.me
+            emailVerified: true
+          firstName: Christian
+          middleName: null
+          lastName: Areas
+          dateOfBirth: '1982-01-18'
+      properties:
+        personId:
+          type: integer
+          description: The person’s unique identifier.
+        createdDate:
+          type: string
+          format: date
+          description: The date the system created the person.
+        email:
+          type: object
+          required:
+            - address
+            - verified
+          properties:
+            address:
+              type: string
+              format: email
+              description: The person’s email address.
+            verified:
+              type: boolean
+              description: Whether or not the person’s email address is verified.
+        name:
+          type: object
+          properties:
+            first:
+              type: string
+              description: The person’s first name.
+            middle:
+              type: string
+              description: The person’s middle name.
+            last:
+              type: string
+              description: The person’s last name.
+        primaryPhoneNumber:
+          type: object
+          properties:
+            countryCode:
+              type: string
+              maxLength: 2
+              example: '1'
+            phoneNumber:
+              type: string
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1982-01-18'
+          description: The person’s date of birth.
+      required:
+        - personId
+        - createdDate
+        - email
+    Resume:
+      title: Resume
+      type: object
+      description: The `Resume` object contains a user’s educational and professional details.
+      examples:
+        - resumeId: string
+          education: {}
+      properties:
+        resumeId:
+          type: string
+        personId:
+          type: string
+        summary:
+          type: string
+        experience:
+          type: object
+        skills:
+          type: object
+        education:
+          type: object
+      required:
+        - resumeId
+        - personId
