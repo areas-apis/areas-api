@@ -13,8 +13,8 @@ tags:
   - name: Life
   - name: Career
 servers:
-  - url: 'api.areas.me'
-  - url: 'test-api.areas.me'
+  - url: 'https://api.areas.me'
+  - url: 'https://test-api.areas.me'
 paths:
   '/persons/{personId}':
     parameters:
