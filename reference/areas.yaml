@@ -1,4 +1,6 @@
 openapi: 3.1.0
+x-stoplight:
+  id: 0b810d4c5fc11
 info:
   title: Areas API
   summary: Use the Areas API to learn more about Christian.
@@ -102,10 +104,10 @@ paths:
                   lastName: Baker
                   dateOfBirth: '1985-10-02'
         description: Patch person properties to update.
-  /person:
+  /persons:
     post:
       summary: Create New User
-      operationId: post-person
+      operationId: post-persons
       tags:
         - Core
       responses:
@@ -133,22 +135,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                dateOfBirth:
-                  type: string
-                  format: date
-              required:
-                - firstName
-                - lastName
-                - email
-                - dateOfBirth
+              $ref: '#/components/schemas/Person'
             examples:
               Create User Bob Fellow:
                 value:
@@ -164,25 +151,43 @@ components:
     Person:
       title: Person
       type: object
-      description: The `Person` object contains a person’s personal details.
+      description: 'The `Person` object contains a person’s details, such as their name, date of birth, email address, and phone number.'
       examples:
         - personId: 1
-          createdDate: '2022-01-01'
+          createdDateTime: '2022-01-01T07:53:07Z'
           email:
-            emailAddress: me@areas.me
-            emailVerified: true
-          firstName: Christian
-          middleName: null
-          lastName: Areas
+            address: me@areas.me
+            verified: true
+          name:
+            first: Christian
+            middle: null
+            last: Areas
+          primaryPhoneNumber:
+            countryCode: '1'
+            phoneNumber: '4088029811'
           dateOfBirth: '1982-01-18'
+        - personId: 2
+          createdDateTime: '2022-01-01T07:53:07Z'
+          email:
+            address: brendamr_10@hotmail.com
+            verified: true
+          name:
+            first: Brenda
+            middle: null
+            last: Mina Rojas
+          primaryPhoneNumber:
+            countryCode: '57'
+            phoneNumber: '3053754738'
+          dateOfBirth: '1994-10-19'
       properties:
         personId:
           type: integer
           description: The person’s unique identifier.
-        createdDate:
+          format: int64
+        createdDateTime:
           type: string
-          format: date
-          description: The date the system created the person.
+          format: date-time
+          description: The date and time the system created the person.
         email:
           type: object
           required:
@@ -195,7 +200,8 @@ components:
               description: The person’s email address.
             verified:
               type: boolean
-              description: Whether or not the person’s email address is verified.
+              description: Whether the person’s email address is verified.
+              default: false
         name:
           type: object
           properties:
@@ -206,8 +212,8 @@ components:
               type: string
               description: The person’s middle name.
             last:
-              type: string
               description: The person’s last name.
+              type: string
         primaryPhoneNumber:
           type: object
           properties:
@@ -224,28 +230,93 @@ components:
           description: The person’s date of birth.
       required:
         - personId
-        - createdDate
+        - createdDateTime
         - email
     Resume:
       title: Resume
       type: object
-      description: The `Resume` object contains a user’s educational and professional details.
+      description: 'The `Resume` object contains a person’s experience, education, and skills.'
       examples:
-        - resumeId: string
+        - resumeId: 1
+          personId: 1
+          summary: 'A writer who loves language and technology. Honest, transparent, and easy to work with. Runs marathons and builds mechanical keyboards during off hours.'
+          experience: {}
           education: {}
+          skills: {}
+      x-internal: false
       properties:
         resumeId:
-          type: string
+          type: integer
+          format: int64
+          description: The resume’s unique identifier.
         personId:
-          type: string
+          format: int64
+          type: integer
+          description: The person’s unique identifier.
         summary:
           type: string
+          description: 'A summary of the person’s experience, education, and skills.'
         experience:
-          type: object
-        skills:
-          type: object
+          type: array
+          items:
+            type: object
+            properties:
+              company:
+                type: string
+              url:
+                type: string
+                format: uri
+              role:
+                type: string
+              beginData:
+                type: string
+                format: date
+              endDate:
+                type: string
+                format: date
+              accomplishments:
+                type: array
+                items:
+                  type: string
         education:
-          type: object
+          type: array
+          items:
+            type: object
+            properties:
+              school:
+                type: string
+              url:
+                type: string
+                format: uri
+              degree:
+                type: string
+              field:
+                type: string
+              beginDate:
+                type: string
+                format: date
+              endDate:
+                type: string
+                format: date
+        skills:
+          type: array
+          items:
+            type: object
+            properties:
+              category:
+                type: string
+              skills:
+                type: array
+                items:
+                  type: string
       required:
         - resumeId
         - personId
+    Portfolio:
+      title: Portfolio
+      x-stoplight:
+        id: 0g7bxxet66vwp
+      type: object
+      properties:
+        id:
+          type: string
