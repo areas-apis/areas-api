@@ -3,8 +3,8 @@ x-stoplight:
   id: 0b810d4c5fc11
 info:
   title: Areas API
-  summary: Use the Areas API to learn more about Christian.
-  description: .
+  summary: The Areas API
+  description: Use the Areas API to learn more about Christian.
   version: 0.1.0
   contact:
     name: Christian Areas
@@ -36,16 +36,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Person'
-              examples:
-                Get User Alice Smith:
-                  value:
-                    personId: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    createdDate: '2019-08-24'
         '404':
           description: User Not Found
       operationId: get-persons-personId
@@ -62,16 +52,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Person'
-              examples:
-                Updated User Rebecca Baker:
-                  value:
-                    personId: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createdDate: '2019-08-24'
         '404':
           description: User Not Found
         '409':
@@ -117,16 +97,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Person'
-              examples:
-                New User Bob Fellow:
-                  value:
-                    personId: 12
-                    firstName: Bob
-                    lastName: Fellow
-                    email: bob.fellow@gmail.com
-                    dateOfBirth: '1996-08-24'
-                    emailVerified: false
-                    createdDate: '2020-11-18'
         '400':
           description: Missing Required Information
         '409':
@@ -136,13 +106,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Person'
-            examples:
-              Create User Bob Fellow:
-                value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new person.
       description: Create a new person.
     parameters: []
@@ -162,7 +125,7 @@ components:
             first: Christian
             middle: null
             last: Areas
-          primaryPhoneNumber:
+          phoneNumber:
             countryCode: '1'
             phoneNumber: '4088029811'
           dateOfBirth: '1982-01-18'
@@ -175,7 +138,7 @@ components:
             first: Brenda
             middle: null
             last: Mina Rojas
-          primaryPhoneNumber:
+          phoneNumber:
             countryCode: '57'
             phoneNumber: '3053754738'
           dateOfBirth: '1994-10-19'
@@ -193,36 +156,47 @@ components:
           required:
             - address
             - verified
+          description: The person’s email address and whether its verified.
           properties:
             address:
               type: string
               format: email
               description: The person’s email address.
+              example: me@areas.me
             verified:
               type: boolean
               description: Whether the person’s email address is verified.
               default: false
+              example: true
         name:
           type: object
+          description: The person’s full name.
           properties:
             first:
               type: string
               description: The person’s first name.
+              example: Christian
             middle:
               type: string
               description: The person’s middle name.
             last:
-              description: The person’s last name.
               type: string
-        primaryPhoneNumber:
+              description: The person’s last name.
+              example: Areas
+        phoneNumber:
           type: object
+          description: The person’s phone number.
           properties:
             countryCode:
               type: string
               maxLength: 2
               example: '1'
+              minLength: 1
+              description: The person’s country code.
             phoneNumber:
               type: string
+              description: The person’s phone number.
+              example: '4088029811'
         dateOfBirth:
           type: string
           format: date
@@ -258,24 +232,31 @@ components:
           description: 'A summary of the person’s experience, education, and skills.'
         experience:
           type: array
+          description: Array
           items:
             type: object
             properties:
               company:
                 type: string
+                description: The company the person works or worked for.
               url:
                 type: string
                 format: uri
+                description: The company’s URL.
               role:
                 type: string
-              beginData:
+                description: The person’s role at the company.
+              beginDate:
                 type: string
                 format: date
+                description: The date the person began working at the company.
               endDate:
                 type: string
                 format: date
+                description: The date the person ended working at the company.
               accomplishments:
                 type: array
+                description: The person’s accomplishments at the company.
                 items:
                   type: string
         education:
