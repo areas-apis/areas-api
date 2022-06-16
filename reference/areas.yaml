@@ -125,9 +125,9 @@ components:
             first: Christian
             middle: null
             last: Areas
-          phoneNumber:
+          phone:
             countryCode: '1'
-            phoneNumber: '4088029811'
+            number: '4088029811'
           dateOfBirth: '1982-01-18'
         - personId: 2
           createdDateTime: '2022-01-01T07:53:07Z'
@@ -138,9 +138,9 @@ components:
             first: Brenda
             middle: null
             last: Mina Rojas
-          phoneNumber:
+          phone:
             countryCode: '57'
-            phoneNumber: '3053754738'
+            number: '3053754738'
           dateOfBirth: '1994-10-19'
       properties:
         personId:
@@ -153,10 +153,10 @@ components:
           description: The date and time the system created the person.
         email:
           type: object
+          description: The person’s email address and whether its verified.
           required:
             - address
             - verified
-          description: The person’s email address and whether its verified.
           properties:
             address:
               type: string
@@ -183,7 +183,7 @@ components:
               type: string
               description: The person’s last name.
               example: Areas
-        phoneNumber:
+        phone:
           type: object
           description: The person’s phone number.
           properties:
@@ -193,7 +193,7 @@ components:
               example: '1'
               minLength: 1
               description: The person’s country code.
-            phoneNumber:
+            number:
               type: string
               description: The person’s phone number.
               example: '4088029811'
