@@ -15,8 +15,18 @@ tags:
   - name: Life
   - name: Career
 servers:
-  - url: 'https://api.areas.me'
-  - url: 'https://test-api.areas.me'
+  - url: 'https://{environment}.areas.me/{version}'
+    variables:
+      environment:
+        default: api
+        enum:
+          - api
+          - sandbox-api
+      version:
+        default: beta
+        enum:
+          - beta
+          - v1
 paths:
   '/persons/{personId}':
     parameters:
