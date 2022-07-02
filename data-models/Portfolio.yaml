@@ -1,0 +1,7 @@
+title: Portfolio
+x-stoplight:
+  id: 0g7bxxet66vwp
+type: object
+properties:
+  id:
+    type: string

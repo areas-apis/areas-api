@@ -1,0 +1,86 @@
+title: Resume
+type: object
+description: 'The `Resume` object contains a person’s experience, education, and skills.'
+examples:
+  - resumeId: 1
+    personId: 1
+    summary: 'A writer who loves language and technology. Honest, transparent, and easy to work with. Runs marathons and builds mechanical keyboards during off hours.'
+    experience: {}
+    education: {}
+    skills: {}
+x-internal: false
+properties:
+  resumeId:
+    type: integer
+    format: int64
+    description: The resume’s unique identifier.
+  personId:
+    format: int64
+    type: integer
+    description: The person’s unique identifier.
+  summary:
+    type: string
+    description: 'A summary of the person’s experience, education, and skills.'
+  experience:
+    type: array
+    description: Array
+    items:
+      type: object
+      properties:
+        company:
+          type: string
+          description: The company the person works or worked for.
+        url:
+          type: string
+          format: uri
+          description: The company’s URL.
+        role:
+          type: string
+          description: The person’s role at the company.
+        beginDate:
+          type: string
+          format: date
+          description: The date the person began working at the company.
+        endDate:
+          type: string
+          format: date
+          description: The date the person ended working at the company.
+        accomplishments:
+          type: array
+          description: The person’s accomplishments at the company.
+          items:
+            type: string
+  education:
+    type: array
+    items:
+      type: object
+      properties:
+        school:
+          type: string
+        url:
+          type: string
+          format: uri
+        degree:
+          type: string
+        field:
+          type: string
+        beginDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+  skills:
+    type: array
+    items:
+      type: object
+      properties:
+        category:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+required:
+  - resumeId
+  - personId

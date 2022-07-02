@@ -1,0 +1,94 @@
+title: Person
+type: object
+description: 'The `Person` object represents a person. It lets you learn more about them, such as their name, email address and phone number.'
+properties:
+  personId:
+    type: integer
+    description: The person’s unique identifier.
+    format: int64
+  createdDateTime:
+    type: string
+    format: date-time
+    description: The date and time the system created the person.
+  email:
+    type: object
+    description: The person’s email address and whether its verified.
+    required:
+      - address
+      - verified
+    properties:
+      address:
+        type: string
+        format: email
+        description: The person’s email address.
+        example: me@areas.me
+      verified:
+        type: boolean
+        description: Whether the person’s email address is verified.
+        default: false
+        example: true
+  name:
+    type: object
+    description: The person’s full name.
+    properties:
+      first:
+        type: string
+        description: The person’s first name.
+        example: Christian
+      middle:
+        type: string
+        description: The person’s middle name.
+      last:
+        type: string
+        description: The person’s last name.
+        example: Areas
+  phone:
+    type: object
+    description: The person’s phone number.
+    properties:
+      countryCode:
+        type: string
+        maxLength: 2
+        example: '1'
+        minLength: 1
+        description: The person’s country code.
+      number:
+        type: string
+        description: The person’s phone number.
+        example: '4088029811'
+  dateOfBirth:
+    type: string
+    format: date
+    example: '1982-01-18'
+    description: The person’s date of birth.
+required:
+  - personId
+  - createdDateTime
+  - email
+examples:
+  - personId: 1
+    createdDateTime: '2022-01-01T07:53:07Z'
+    email:
+      address: me@areas.me
+      verified: true
+    name:
+      first: Christian
+      middle: null
+      last: Areas
+    phone:
+      countryCode: '1'
+      number: '4088029811'
+    dateOfBirth: '1982-01-18'
+  - personId: 2
+    createdDateTime: '2022-01-01T07:53:08Z'
+    email:
+      address: brendamr_10@hotmail.com
+      verified: true
+    name:
+      first: Brenda
+      middle: null
+      last: Mina Rojas
+    phone:
+      countryCode: '57'
+      number: '3053754738'
+    dateOfBirth: '1994-10-19'
