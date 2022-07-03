@@ -1,4 +1,6 @@
 title: Person
+x-stoplight:
+  id: 5c742918ad976
 type: object
 description: 'The `Person` object represents a person. It lets you learn more about them, such as their name, email address and phone number.'
 properties:

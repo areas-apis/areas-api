@@ -1,4 +1,6 @@
 title: Resume
+x-stoplight:
+  id: b05357090ad8d
 type: object
 description: 'The `Resume` object contains a person’s experience, education, and skills.'
 examples:
