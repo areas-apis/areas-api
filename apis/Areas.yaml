@@ -9,7 +9,7 @@ info:
   contact:
     name: Christian Areas
     email: me@areas.me
-    url: https://areas.me
+    url: 'https://areas.me'
 tags:
   - name: Core
   - name: Life
@@ -28,110 +28,36 @@ servers:
           - beta
           - v1
 paths:
-  '/persons':
+  '/persons/{email}':
     post:
       summary: Create a person
+      description: 
       operationId: post-persons
       tags:
         - Core
+      parameters:
+        - in: path
+          name: email
+          description: The person’s email address.
+          schema:
+            type: string
+          required: true
       responses:
-
-  # '/persons/{personId}':
-  #   parameters:
-  #     - schema:
-  #         type: string
-  #       name: personId
-  #       in: path
-  #       required: true
-  #   get:
-  #     summary: Get User Info by User ID
-  #     tags:
-  #       - Core
-  #     responses:
-  #       '200':
-  #         description: User Found
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/Person'
-  #       '404':
-  #         description: User Not Found
-  #     operationId: get-persons-personId
-  #     description: Retrieve the information of the person with the matching person ID.
-  #   patch:
-  #     summary: Update User Information
-  #     operationId: patch-persons-personId
-  #     tags:
-  #       - Core
-  #     responses:
-  #       '200':
-  #         description: User Updated
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/Person'
-  #       '404':
-  #         description: User Not Found
-  #       '409':
-  #         description: Email Already Taken
-  #     description: Update the information of an existing person.
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             type: object
-  #             properties:
-  #               firstName:
-  #                 type: string
-  #               lastName:
-  #                 type: string
-  #               email:
-  #                 type: string
-  #                 description: 'If a new email is given, the user''s email verified property will be set to false.'
-  #               dateOfBirth:
-  #                 type: string
-  #           examples:
-  #             Update First Name:
-  #               value:
-  #                 firstName: Rebecca
-  #             Update Email:
-  #               value:
-  #                 email: rebecca@gmail.com
-  #             Update Last Name & Date of Birth:
-  #               value:
-  #                 lastName: Baker
-  #                 dateOfBirth: '1985-10-02'
-  #       description: Patch person properties to update.
-  # /persons:
-  #   post:
-  #     summary: Create New User
-  #     operationId: post-persons
-  #     tags:
-  #       - Core
-  #     responses:
-  #       '200':
-  #         description: User Created
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/Person'
-  #       '400':
-  #         description: Missing Required Information
-  #       '409':
-  #         description: Email Already Taken
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/Person'
-  #       description: Post the necessary fields for the API to create a new person.
-  #     description: Create a new person.
-  #   parameters: []
+        '200':
+          description: You successfully created a person.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        '400':
+          description: You didn’t submit an email address.
+        '409':
+          description: You submitted an email address for a person that’s already in the system.
 components:
   schemas:
     Person:
-      $ref: '../data-models/Person.yaml'
+      $ref: ../data-models/Person.yaml
     Resume:
-      $ref: '../data-models/Resume.yaml'
+      $ref: ../data-models/Resume.yaml
     Portfolio:
-      $ref: '../data-models/Portfolio.yaml'
+      $ref: ../data-models/Portfolio.yaml
