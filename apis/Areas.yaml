@@ -28,7 +28,7 @@ servers:
           - beta
           - v1
 paths:
-  '/persons':
+  '/persons/{email}':
     post:
       summary: Create a person
       description: 
